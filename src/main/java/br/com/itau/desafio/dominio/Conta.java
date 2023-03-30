@@ -1,10 +1,8 @@
 package br.com.itau.desafio.dominio;
 
 import java.math.BigDecimal;
-import javax.persistence.Entity;
 
 // Classe que representa uma conta
-@Entity
 public class Conta {
     // Camada de Domínio
     
