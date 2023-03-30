@@ -23,6 +23,10 @@ public class ContaEntity {
     private String cpf;
     private BigDecimal saldo;
 
+    public ContaEntity() {
+        
+    }
+
     public ContaEntity(Conta conta) {
         this.nome = conta.getNome();
         this.cpf = conta.getCpf();
