@@ -1,4 +1,4 @@
-package br.com.itau.desafio.infraestrutura.entidades;
+package br.com.itau.desafio.infraestrutura.adaptadores.entidades;
 
 import java.math.BigDecimal;
 

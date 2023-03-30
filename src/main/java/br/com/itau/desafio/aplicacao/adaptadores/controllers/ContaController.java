@@ -21,17 +21,17 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.itau.desafio.dominio.dtos.ContaDTO;
-import br.com.itau.desafio.infraestrutura.entidades.ContaEntity;
+import br.com.itau.desafio.infraestrutura.adaptadores.entidades.ContaEntity;
 import br.com.itau.desafio.dominio.SaldoInsuficienteException;
-import br.com.itau.desafio.dominio.adaptadores.services.ContaServiceImpl;
+import br.com.itau.desafio.dominio.adaptadores.services.ContaServiceImp;
 
 @RestController
 @RequestMapping("/contas")
 public class ContaController {
 
-    private ContaServiceImpl contaService;
+    private ContaServiceImp contaService;
 
-    public ContaController(ContaServiceImpl contaService) {
+    public ContaController(ContaServiceImp contaService) {
         this.contaService = contaService;
     }
 

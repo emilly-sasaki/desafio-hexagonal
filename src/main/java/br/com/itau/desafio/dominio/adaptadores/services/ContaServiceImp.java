@@ -6,15 +6,15 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import br.com.itau.desafio.dominio.SaldoInsuficienteException;
-import br.com.itau.desafio.infraestrutura.entidades.ContaEntity;
-import br.com.itau.desafio.infraestrutura.repositorios.SpringContaRepository;
+import br.com.itau.desafio.infraestrutura.adaptadores.entidades.ContaEntity;
+import br.com.itau.desafio.infraestrutura.adaptadores.repositorios.SpringContaRepository;
 
 @Service
-public class ContaServiceImpl {
+public class ContaServiceImp {
 
     private SpringContaRepository contaRepository;
 
-    public ContaServiceImpl(SpringContaRepository contaRepository) {
+    public ContaServiceImp(SpringContaRepository contaRepository) {
         this.contaRepository = contaRepository;
     }
 
