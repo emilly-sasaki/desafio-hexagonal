@@ -1,29 +1,30 @@
-package br.com.itau.desafio.dominio;
+package br.com.itau.desafio.dominio.adaptadores.services;
 
 import java.math.BigDecimal;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import br.com.itau.desafio.dominio.entidades.Conta;
-import br.com.itau.desafio.portas.saidas.ContaRepository;
+import br.com.itau.desafio.dominio.SaldoInsuficienteException;
+import br.com.itau.desafio.infraestrutura.entidades.ContaEntity;
+import br.com.itau.desafio.infraestrutura.repositorios.SpringContaRepository;
 
 @Service
 public class ContaServiceImpl {
 
-    private ContaRepository contaRepository;
+    private SpringContaRepository contaRepository;
 
-    public ContaServiceImpl(ContaRepository contaRepository) {
+    public ContaServiceImpl(SpringContaRepository contaRepository) {
         this.contaRepository = contaRepository;
     }
 
-    public Conta criarConta(Conta conta) {
+    public ContaEntity criarConta(ContaEntity conta) {
         conta.setId(this.gerarIdConta());
         return contaRepository.save(conta);
     }
 
-    public Conta depositar(Long id, BigDecimal valor) {
-        Conta conta = this.buscarContaPorId(id);
+    public ContaEntity depositar(Long id, BigDecimal valor) {
+        ContaEntity conta = this.buscarContaPorId(id);
         if (id == null) {
             throw new IllegalArgumentException("ID não pode ser nulo");
         }
@@ -31,8 +32,8 @@ public class ContaServiceImpl {
         return contaRepository.save(conta);
     }
 
-    public Conta sacar(Long id, BigDecimal valor) throws SaldoInsuficienteException {
-        Conta conta = this.buscarContaPorId(id);
+    public ContaEntity sacar(Long id, BigDecimal valor) throws SaldoInsuficienteException {
+        ContaEntity conta = this.buscarContaPorId(id);
         BigDecimal novoSaldo = conta.getSaldo().subtract(valor);
         if (novoSaldo.compareTo(BigDecimal.ZERO) < 0) {
             throw new SaldoInsuficienteException("Dando erro");
@@ -41,8 +42,8 @@ public class ContaServiceImpl {
         return contaRepository.save(conta);
     }
 
-    private Conta buscarContaPorId(Long id) {
-        Optional<Conta> conta = contaRepository.findById(id);
+    private ContaEntity buscarContaPorId(Long id) {
+        Optional<ContaEntity> conta = contaRepository.findById(id);
         if (conta.isEmpty()) {
             throw new SaldoInsuficienteException("n");
         }

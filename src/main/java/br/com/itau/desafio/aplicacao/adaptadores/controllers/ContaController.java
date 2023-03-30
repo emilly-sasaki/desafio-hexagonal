@@ -1,4 +1,4 @@
-package br.com.itau.desafio.adaptadores.entrada;
+package br.com.itau.desafio.aplicacao.adaptadores.controllers;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.itau.desafio.dominio.dtos.ContaDTO;
-import br.com.itau.desafio.dominio.entidades.Conta;
-import br.com.itau.desafio.dominio.ContaServiceImpl;
+import br.com.itau.desafio.infraestrutura.entidades.ContaEntity;
 import br.com.itau.desafio.dominio.SaldoInsuficienteException;
+import br.com.itau.desafio.dominio.adaptadores.services.ContaServiceImpl;
 
 @RestController
 @RequestMapping("/contas")
@@ -36,15 +36,15 @@ public class ContaController {
     }
 
     @PostMapping
-    public ResponseEntity<Conta> criarConta(@RequestBody Conta conta) {
-        Conta novaConta = contaService.criarConta(conta);
+    public ResponseEntity<ContaEntity> criarConta(@RequestBody ContaEntity conta) {
+        ContaEntity novaConta = contaService.criarConta(conta);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaConta);
     }
 
     @PutMapping("/{id}/deposito")
-    public ResponseEntity<Conta> depositar(@PathVariable Long id, @RequestBody Map<String, String> body) {
+    public ResponseEntity<ContaEntity> depositar(@PathVariable Long id, @RequestBody Map<String, String> body) {
         BigDecimal valor = new BigDecimal(body.get("valor"));
-        Conta contaAtualizada = contaService.depositar(id, valor);
+        ContaEntity contaAtualizada = contaService.depositar(id, valor);
         return ResponseEntity.ok(contaAtualizada);
     }
 
@@ -52,7 +52,7 @@ public class ContaController {
     public ResponseEntity<?> sacar(@PathVariable Long id, @RequestBody Map<String, String> body) {
         BigDecimal valor = new BigDecimal(body.get("valor"));
         try {
-            Conta contaAtualizada = contaService.sacar(id, valor);
+            ContaEntity contaAtualizada = contaService.sacar(id, valor);
             return ResponseEntity.ok(contaAtualizada);
         } catch (SaldoInsuficienteException e) {
             return ResponseEntity.badRequest().body("Saque não permitido - Saldo insuficiente");

@@ -1,4 +1,4 @@
-package br.com.itau.desafio.dominio.entidades;
+package br.com.itau.desafio.infraestrutura.entidades;
 
 import java.math.BigDecimal;
 
@@ -10,7 +10,7 @@ import javax.persistence.Id;
 
 // Classe que representa uma conta
 @Entity
-public class Conta {
+public class ContaEntity {
     // Camada de Domínio
     
     @Id
@@ -26,11 +26,11 @@ public class Conta {
     @Column(nullable = false)
     private BigDecimal saldo;
 
-    public Conta() {
+    public ContaEntity() {
         this.saldo = BigDecimal.ZERO;
     }
 
-    public Conta(String nome, String cpf, BigDecimal saldo) {
+    public ContaEntity(String nome, String cpf, BigDecimal saldo) {
         this.nome = nome;
         this.cpf = cpf;
         this.saldo = saldo;
