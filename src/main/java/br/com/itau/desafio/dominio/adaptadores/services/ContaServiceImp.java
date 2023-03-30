@@ -2,7 +2,6 @@ package br.com.itau.desafio.dominio.adaptadores.services;
 
 import java.math.BigDecimal;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
