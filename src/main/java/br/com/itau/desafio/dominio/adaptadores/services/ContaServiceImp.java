@@ -5,26 +5,27 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import br.com.itau.desafio.dominio.Conta;
 import br.com.itau.desafio.dominio.SaldoInsuficienteException;
-import br.com.itau.desafio.infraestrutura.adaptadores.entidades.ContaEntity;
-import br.com.itau.desafio.infraestrutura.adaptadores.repositorios.SpringContaRepository;
+import br.com.itau.desafio.dominio.portas.repositorios.ContaRepositoryPort;
 
 @Service
-public class ContaServiceImp {
+public class ContaServiceImp implements ContaServicePort{
 
-    private SpringContaRepository contaRepository;
+    private final ContaRepositoryPort contaRepository;
 
-    public ContaServiceImp(SpringContaRepository contaRepository) {
+    public ContaServiceImp(ContaRepositoryPort contaRepository) {
         this.contaRepository = contaRepository;
     }
 
-    public ContaEntity criarConta(ContaEntity conta) {
+    public Conta criarConta(Conta conta) {
         conta.setId(this.gerarIdConta());
-        return contaRepository.save(conta);
+        Conta contaCriada = contaRepository.save(conta);
+        return contaCriada;
     }
 
-    public ContaEntity depositar(Long id, BigDecimal valor) {
-        ContaEntity conta = this.buscarContaPorId(id);
+    public Conta depositar(Long id, BigDecimal valor) {
+        Conta conta = this.buscarContaPorId(id);
         if (id == null) {
             throw new IllegalArgumentException("ID não pode ser nulo");
         }
@@ -32,8 +33,8 @@ public class ContaServiceImp {
         return contaRepository.save(conta);
     }
 
-    public ContaEntity sacar(Long id, BigDecimal valor) throws SaldoInsuficienteException {
-        ContaEntity conta = this.buscarContaPorId(id);
+    public Conta sacar(Long id, BigDecimal valor) throws SaldoInsuficienteException {
+        Conta conta = this.buscarContaPorId(id);
         BigDecimal novoSaldo = conta.getSaldo().subtract(valor);
         if (novoSaldo.compareTo(BigDecimal.ZERO) < 0) {
             throw new SaldoInsuficienteException("Dando erro");
@@ -42,8 +43,8 @@ public class ContaServiceImp {
         return contaRepository.save(conta);
     }
 
-    private ContaEntity buscarContaPorId(Long id) {
-        Optional<ContaEntity> conta = contaRepository.findById(id);
+    private Conta buscarContaPorId(Long id) {
+        Optional<Conta> conta = contaRepository.findById(id);
         if (conta.isEmpty()) {
             throw new SaldoInsuficienteException("n");
         }

@@ -2,10 +2,10 @@ package br.com.itau.desafio.dominio.portas.repositorios;
 
 import java.util.Optional;
 
-import br.com.itau.desafio.infraestrutura.adaptadores.entidades.ContaEntity;
+import br.com.itau.desafio.dominio.Conta;
 
 public interface ContaRepositoryPort {
-    public ContaEntity salvar(ContaEntity conta);
+    public Conta save(Conta conta);
 
-    public Optional<ContaEntity> buscarPeloID(Long id);
+    public Conta findById(Long id);
 }
