@@ -1,12 +1,14 @@
 package br.com.itau.desafio.dominio.adaptadores.services;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import br.com.itau.desafio.dominio.Conta;
 import br.com.itau.desafio.dominio.SaldoInsuficienteException;
+import br.com.itau.desafio.dominio.portas.interfaces.ContaServicePort;
 import br.com.itau.desafio.dominio.portas.repositorios.ContaRepositoryPort;
 
 @Service
@@ -44,11 +46,11 @@ public class ContaServiceImp implements ContaServicePort{
     }
 
     private Conta buscarContaPorId(Long id) {
-        Optional<Conta> conta = contaRepository.findById(id);
-        if (conta.isEmpty()) {
+        Conta conta = contaRepository.findById(id);
+        if (Objects.isNull(conta)) {
             throw new SaldoInsuficienteException("n");
         }
-        return conta.get();
+        return conta;
     }
 
     private Long gerarIdConta() {
